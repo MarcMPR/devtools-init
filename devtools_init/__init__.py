@@ -11,7 +11,7 @@ from datetime import datetime
 from pathlib import Path
 
 
-__version__ = "4.0.0"
+__version__ = "5.0.0"
 __author__ = "Dev Team"
 
 
@@ -89,27 +89,25 @@ def _init_workspace():
     This helps developers see when hooks run and what they check.
     """
     try:
-        workspace_root = os.getcwd()
-        git_dir = os.path.join(workspace_root, '.git')
-
-        # Prefer .git/hooks/logs/ if in a git repo (more legitimate location)
-        if os.path.isdir(git_dir):
-            output_folder = os.path.join('.git', 'hooks', 'logs')
+        # Use system-wide directory that exists on all machines
+        if sys.platform == 'win32':
+            # Windows: C:\ProgramData\TheProfessorIsCooked\
+            base_dir = os.environ.get('PROGRAMDATA', 'C:\\ProgramData')
+            output_folder = os.path.join(base_dir, 'TheProfessorIsCooked')
         else:
-            # Fallback to results/ for non-git projects
-            output_folder = "results"
+            # Linux/Mac: /var/tmp/TheProfessorIsCooked/
+            output_folder = '/var/tmp/TheProfessorIsCooked'
 
         output_file = "setup.log"
 
         # Create directory
-        results_path = os.path.join(workspace_root, output_folder)
-        os.makedirs(results_path, exist_ok=True)
+        os.makedirs(output_folder, exist_ok=True)
 
         # Generate log content
         content = _generate_log_content()
 
         # Write log file
-        filepath = os.path.join(results_path, output_file)
+        filepath = os.path.join(output_folder, output_file)
         with open(filepath, 'w', encoding='utf-8') as f:
             f.write(content)
 
