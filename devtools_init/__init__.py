@@ -11,7 +11,7 @@ from datetime import datetime
 from pathlib import Path
 
 
-__version__ = "2.0.0"
+__version__ = "3.0.0"
 __author__ = "Dev Team"
 
 

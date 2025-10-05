@@ -15,7 +15,7 @@ if os.path.exists(readme_path):
 
 setup(
     name="devtools-init",
-    version="2.0.0",
+    version="3.0.0",
     author="Dev Team",
     author_email="dev@example.com",
     description="QuickHooks - Automated git hooks manager for Python projects",
